@@ -6,8 +6,11 @@ import android.content.Context
 import android.content.Intent
 import android.content.IntentFilter
 import android.graphics.Color
+import android.net.Uri
 import android.os.Build
 import android.os.Bundle
+import android.provider.MediaStore
+import androidx.activity.result.IntentSenderRequest
 import androidx.activity.viewModels
 import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
@@ -27,6 +30,7 @@ import com.example.service.service.MusicPlayerRemote
 import com.example.service.service.MusicService
 import com.example.service.service.MusicService.Companion.SHUFFLE_MODE_NONE
 import com.example.service.service.MusicService.Companion.SHUFFLE_MODE_SHUFFLE
+import com.example.service.utils.MusicUtil
 import com.example.service.utils.Utils
 import dagger.hilt.android.AndroidEntryPoint
 import kotlin.math.abs
@@ -38,7 +42,7 @@ class ArtistActivity : BaseActivity<ActivityArtistBinding>(ActivityArtistBinding
 
 
     private val mainViewModel: MainViewModel by viewModels()
-    private val allSongAdapter = SongAdapter  {   item ->      mainViewModel.getSelectedAudios(item) }
+    private val allSongAdapter = SongAdapter  {   item ->  mainViewModel.getSelectedAudios(item) }
     private val listData = mutableListOf<Audio>()
 
 
@@ -117,17 +121,9 @@ class ArtistActivity : BaseActivity<ActivityArtistBinding>(ActivityArtistBinding
             mainViewModel.getAllArtistSong( artistName = artistId)
 
 
-            mainViewModel.allAlbumSong.observe(this) { items ->
-                items.onEach {
-                    println("reloadData $it")
-                }
-                allSongAdapter.updateData(items)
-            }
-
         } catch (e: Exception) {
             e.printStackTrace()
         }
-
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -168,7 +164,7 @@ class ArtistActivity : BaseActivity<ActivityArtistBinding>(ActivityArtistBinding
             }
 
             appBarLayout.addOnOffsetChangedListener { _, verticalOffset ->
-                val isExpand = abs(verticalOffset) != appBarLayout.totalScrollRange
+                val isExpand = abs(verticalOffset) < appBarLayout.totalScrollRange
                 expandLayout.isVisible = isExpand
 
                 if (isExpand) {
@@ -226,7 +222,49 @@ class ArtistActivity : BaseActivity<ActivityArtistBinding>(ActivityArtistBinding
                     MusicPlayerRemote.openQueue(ArrayList(items), 0, true)
                 }
             }
+
+            mainViewModel.allSelectedAudio.observe(this@ArtistActivity) { items ->
+                if(items.isNullOrEmpty()) {
+                    return@observe
+                }
+
+                allSongAdapter.displayAllSelected(items)
+
+                deleteButton.setOnClickListener {
+                    deleteSelectedAudios(items)
+                }
+            }
         }
+    }
+
+    private fun deleteSelectedAudios(items: MutableList<Audio>) {
+        val filePaths = items.map { it.mediaObject?.id ?: "" }
+        val uris = mutableListOf<Uri>()
+        val audioIds = mutableListOf<Int>()
+        for(path in filePaths) {
+            val id = path.toIntOrNull() ?: return
+            audioIds.add(id)
+            uris.add(MusicUtil.getSongFileUri(id))
+        }
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+            val pendingIntent = MediaStore.createDeleteRequest(
+                this.contentResolver, uris
+            )
+            uris.onEach {
+                println("onDeleteClicked uris: $it")
+            }
+            deleteResultLauncher.launch(
+                IntentSenderRequest.Builder(pendingIntent.intentSender).build()
+            )
+        } else {
+            audioIds.onEach { id ->
+                removeOrRenameFile.deleteAudio(this, id)
+                MusicPlayerRemote.checkAfterDeletePlaying()
+                removeAudioNotExist(this)
+            }
+
+        }
+        sendBroadcast(Intent(Utils.ACTION_FINISH_DOWNLOAD))
     }
 
     override fun setUpMiniPlayer() {

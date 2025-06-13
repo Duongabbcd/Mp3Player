@@ -99,17 +99,22 @@ class PlayerActivity : BaseActivity<ActivityPlayerBinding>(ActivityPlayerBinding
     }
 
     private suspend fun updateFavourite() {
-        val isFavourite =
-            PlaylistUtils.getInstance(this)?.checkIsFavourite(MusicPlayerRemote.getCurrentSong())
-        println("updateFavourite: $isFavourite")
-        val res = if (isFavourite == true) {
-            R.drawable.icon_favourite
-        } else {
-            R.drawable.icon_unfavourite
+        try {
+            val isFavourite =
+                PlaylistUtils.getInstance(this)?.checkIsFavourite(MusicPlayerRemote.getCurrentSong())
+            println("updateFavourite: $isFavourite")
+            val res = if (isFavourite == true) {
+                R.drawable.icon_favourite
+            } else {
+                R.drawable.icon_unfavourite
+            }
+            withContext(Dispatchers.Main) {
+                binding.playingFavourite.setImageResource(res)
+            }
+        } catch (e: Exception) {
+            e.printStackTrace()
         }
-        withContext(Dispatchers.Main) {
-            binding.playingFavourite.setImageResource(res)
-        }
+
     }
 
     private val rotateAnimation: ObjectAnimator by lazy { createRotateAnimation(binding.playingSongAvatar) }

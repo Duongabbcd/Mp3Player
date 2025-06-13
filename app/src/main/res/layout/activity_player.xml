@@ -238,6 +238,7 @@
     <LinearLayout
         android:id="@+id/songInfo"
         android:orientation="vertical"
+        android:layout_marginHorizontal="@dimen/_16sdp"
         android:layout_marginBottom="@dimen/_32sdp"
         app:layout_constraintBottom_toTopOf="@id/bonusFunction"
         app:layout_constraintStart_toStartOf="parent"
