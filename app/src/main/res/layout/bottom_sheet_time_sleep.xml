@@ -1,0 +1,208 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:overScrollMode="never"
+    android:id="@+id/nestedScrollView"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:paddingBottom="@dimen/_20sdp"
+    android:backgroundTint="@color/bottom_sheet_bg"
+    android:background="@drawable/background_corner_top_round">
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:padding="@dimen/_20sdp">
+
+            <TextView
+                android:text="@string/time_sleeper_title"
+                style="@style/CustomTextStyleSemiBold20sp"
+                android:textColor="@color/white"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:paddingHorizontal="@dimen/_16sdp"
+            android:orientation="horizontal">
+
+           <androidx.constraintlayout.widget.ConstraintLayout
+               android:layout_width="@dimen/_145sdp"
+               android:gravity="center_vertical"
+               android:orientation="horizontal"
+               android:layout_height="wrap_content" >
+
+               <com.cheonjaeung.powerwheelpicker.android.WheelPicker
+                   android:id="@+id/hourWheelPicker"
+                   app:layout_constraintTop_toTopOf="parent"
+                   app:layout_constraintStart_toStartOf="parent"
+                   android:layout_width="@dimen/_115sdp"
+                   android:layout_height="@dimen/_138sdp"
+                   android:orientation="vertical"
+                   android:overScrollMode="never"
+                   app:circular="true"
+                   app:layout_behavior="@string/appbar_scrolling_view_behavior"
+                   app:selector_height="50dp" />
+
+               <TextView
+                   android:layout_weight="1"
+                   android:text="hour"
+                   app:layout_constraintEnd_toEndOf="parent"
+                   app:layout_constraintTop_toTopOf="parent"
+                   app:layout_constraintBottom_toBottomOf="parent"
+                   style="@style/CustomTextStyleSemiBold16sp"
+                   android:textColor="@color/white"
+                   android:gravity="start"
+                   android:layout_width="@dimen/_50sdp"
+                   android:layout_height="wrap_content"/>
+
+           </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="@dimen/_145sdp"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:layout_height="wrap_content" >
+
+                <com.cheonjaeung.powerwheelpicker.android.WheelPicker
+                    android:id="@+id/minuteWheelPicker"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    android:layout_width="@dimen/_115sdp"
+                    android:layout_height="@dimen/_138sdp"
+                    android:orientation="vertical"
+                    android:overScrollMode="never"
+                    app:circular="true"
+                    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+                    app:selector_height="50dp" />
+
+                <TextView
+                    android:layout_weight="1"
+                    android:text="min"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    style="@style/CustomTextStyleSemiBold16sp"
+                    android:textColor="@color/white"
+                    android:gravity="start"
+                    android:layout_width="@dimen/_50sdp"
+                    android:layout_height="wrap_content"/>
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_8sdp"
+            android:layout_marginHorizontal="@dimen/_8sdp"
+            android:gravity="end"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/button15m"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="@dimen/_32sdp"
+                android:textColor="#AEAAAE"
+                android:text="15m"
+                android:gravity="center"
+                android:backgroundTint="#322F37"
+                android:background="@drawable/background_selected_100dp"
+                style="@style/CustomTextStyle14sp" />
+
+            <TextView
+                android:id="@+id/button30m"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="@dimen/_32sdp"
+                android:textColor="#AEAAAE"
+                android:text="30m"
+                android:gravity="center"
+                android:backgroundTint="#322F37"
+                android:layout_marginHorizontal="@dimen/_4sdp"
+                android:background="@drawable/background_selected_100dp"
+                style="@style/CustomTextStyle14sp" />
+
+            <TextView
+                android:id="@+id/button45m"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="@dimen/_32sdp"
+                android:textColor="#AEAAAE"
+                android:text="45m"
+                android:gravity="center"
+                android:backgroundTint="#322F37"
+                android:layout_marginHorizontal="@dimen/_4sdp"
+                android:background="@drawable/background_selected_100dp"
+                style="@style/CustomTextStyle14sp" />
+
+            <TextView
+                android:id="@+id/button60m"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="@dimen/_32sdp"
+                android:textColor="#AEAAAE"
+                android:text="60m"
+                android:gravity="center"
+                android:backgroundTint="#322F37"
+                android:background="@drawable/background_selected_100dp"
+                style="@style/CustomTextStyle14sp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_24sdp"
+            android:layout_marginHorizontal="@dimen/_16sdp"
+            android:gravity="end"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/text_cancel"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:paddingHorizontal="24dp"
+                android:paddingVertical="12dp"
+                android:textColor="#AEAAAE"
+                android:text="@string/cancel"
+                android:gravity="center"
+                android:backgroundTint="#322F37"
+                android:layout_marginEnd="@dimen/_8sdp"
+                android:background="@drawable/background_selected_100dp"
+                style="@style/CustomTextStyleSemiBold14sp" />
+
+            <TextView
+                android:id="@+id/text_ok"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:paddingHorizontal="24dp"
+                android:paddingVertical="12dp"
+                android:textColor="#3A236D"
+                android:text="@string/start"
+                android:gravity="center"
+                android:backgroundTint="#CBB6FF"
+                android:layout_marginStart="@dimen/_8sdp"
+                android:background="@drawable/background_selected_100dp"
+                style="@style/CustomTextStyleSemiBold14sp" />
+        </LinearLayout>
+
+
+    </LinearLayout>
+
+</androidx.core.widget.NestedScrollView>

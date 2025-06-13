@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+android:layout_width="match_parent"
+xmlns:tools="http://schemas.android.com/tools"
+android:paddingTop="@dimen/_16sdp"
+xmlns:app="http://schemas.android.com/apk/res-auto"
+android:background="@drawable/background_corner_top_round"
+android:layout_height="wrap_content">
+
+    <com.google.android.material.imageview.ShapeableImageView
+        android:id="@+id/playlistAvatar"
+        android:contentDescription="@string/imageview"
+        android:scaleType="centerCrop"
+        android:src="@drawable/icon_avt_song"
+        android:layout_width="@dimen/_56sdp"
+        android:layout_height="@dimen/_56sdp"
+        android:layout_marginStart="@dimen/_16sdp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:shapeAppearanceOverlay="@style/ImageViewCornerRadius11" />
+
+    <LinearLayout
+        android:layout_marginStart="@dimen/_12sdp"
+        android:layout_marginEnd="@dimen/_16sdp"
+        app:layout_constraintTop_toTopOf="@id/playlistAvatar"
+        app:layout_constraintBottom_toBottomOf="@id/playlistAvatar"
+        app:layout_constraintStart_toEndOf="@id/playlistAvatar"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:orientation="vertical"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:id="@+id/playlistName"
+            style="@style/CustomTextStyleSemiBold14sp"
+            android:text="Whispers in Dusk"
+            android:maxLines="1"
+            android:ellipsize="end"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <TextView
+            android:id="@+id/playlistSize"
+            style="@style/CustomTextStyle12sp"
+            android:textColor="@color/subTitle"
+            android:text="Lina Rowe"
+            android:maxLines="1"
+            android:ellipsize="end"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+    </LinearLayout>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/bottomLayout"
+        android:layout_marginTop="@dimen/_16sdp"
+        android:padding="@dimen/_16sdp"
+        android:background="@color/bottom_sheet_bg"
+        app:layout_constraintTop_toBottomOf="@id/playlistAvatar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:background="@drawable/background_button_radius_12"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+
+            <RelativeLayout
+                android:id="@+id/editPlaylist"
+                android:paddingVertical="@dimen/_13sdp"
+                android:paddingHorizontal="@dimen/_16sdp"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_46sdp">
+
+                <ImageView
+                    android:id="@+id/editIcon"
+                    android:layout_width="@dimen/_20sdp"
+                    android:layout_height="@dimen/_20sdp"
+                    android:contentDescription="@string/imageview"
+                    android:src="@drawable/icon_edit" />
+
+                <TextView
+                    android:layout_marginStart="@dimen/_12sdp"
+                    style="@style/CustomTextStyle16sp"
+                    android:textColor="@color/white"
+                    android:text="@string/edit_playlist"
+                    android:layout_toEndOf="@id/editIcon"
+                    android:layout_width="wrap_content"
+                    android:layout_height="@dimen/_20sdp"/>
+            </RelativeLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/white_0_5" />
+
+            <RelativeLayout
+                android:id="@+id/deletePlaylist"
+                android:paddingVertical="@dimen/_13sdp"
+                android:paddingHorizontal="@dimen/_16sdp"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_46sdp">
+
+                <ImageView
+                    android:id="@+id/deleteIcon"
+                    android:contentDescription="@string/imageview"
+                    android:src="@drawable/icon_ringtone"
+                    android:layout_width="@dimen/_20sdp"
+                    android:layout_height="@dimen/_20sdp"/>
+
+                <TextView
+                    android:layout_marginStart="@dimen/_12sdp"
+                    style="@style/CustomTextStyle16sp"
+                    android:textColor="@color/white"
+                    android:text="@string/delete_playlist"
+                    android:layout_toEndOf="@id/deleteIcon"
+                    android:layout_width="wrap_content"
+                    android:layout_height="@dimen/_20sdp"/>
+            </RelativeLayout>
+
+
+        </LinearLayout>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

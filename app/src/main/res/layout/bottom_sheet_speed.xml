@@ -1,0 +1,199 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:padding="@dimen/_16sdp"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@drawable/background_corner_top_round"
+    android:backgroundTint="@color/bottom_sheet_bg"
+    android:layout_height="wrap_content">
+
+    <TextView
+        android:id="@+id/speed"
+        android:contentDescription="@string/imageview"
+        android:text="@string/speed"
+        style="@style/CustomTextStyleSemiBold20sp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        />
+
+
+    <LinearLayout
+        android:id="@+id/speedItems"
+        android:orientation="vertical"
+        android:layout_marginTop="@dimen/_14sdp"
+        app:layout_constraintTop_toBottomOf="@+id/speed"
+        app:layout_constraintStart_toStartOf="parent"
+        android:background="@drawable/background_button_radius_12"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/slowest"
+            android:paddingHorizontal="@dimen/_16sdp"
+            android:paddingVertical="@dimen/_12sdp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/slowestTitle"
+                style="@style/CustomTextStyleSemiBold14sp"
+                android:textColor="@color/white"
+                android:text="0.5"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                android:layout_width="@dimen/_22sdp"
+                android:layout_height="@dimen/_20sdp"/>
+            
+            <ImageView
+                android:id="@+id/slowestTick"
+                android:visibility="gone"
+                android:contentDescription="@string/imageview"
+                android:src="@drawable/icon_purple_tick"
+                android:padding="@dimen/_4sdp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:layout_width="@dimen/_24sdp"
+                android:layout_height="@dimen/_24sdp"
+                />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/white_0_5" />
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/medium"
+            android:paddingHorizontal="@dimen/_16sdp"
+            android:paddingVertical="@dimen/_12sdp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/mediumTitle"
+                style="@style/CustomTextStyleSemiBold14sp"
+                android:textColor="@color/white"
+                android:text="1.0"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                android:layout_width="@dimen/_22sdp"
+                android:layout_height="@dimen/_20sdp"/>
+
+            <ImageView
+                android:id="@+id/mediumTick"
+                android:visibility="gone"
+                android:contentDescription="@string/imageview"
+                android:src="@drawable/icon_purple_tick"
+                android:padding="@dimen/_4sdp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:layout_width="@dimen/_24sdp"
+                android:layout_height="@dimen/_24sdp"
+                />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/white_0_5" />
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/fastest"
+            android:paddingHorizontal="@dimen/_16sdp"
+            android:paddingVertical="@dimen/_12sdp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/fastestTitle"
+                style="@style/CustomTextStyleSemiBold14sp"
+                android:textColor="@color/white"
+                android:text="1.5"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                android:layout_width="@dimen/_22sdp"
+                android:layout_height="@dimen/_20sdp"/>
+
+            <ImageView
+                android:id="@+id/fastestTick"
+                android:visibility="gone"
+                android:contentDescription="@string/imageview"
+                android:src="@drawable/icon_purple_tick"
+                android:padding="@dimen/_4sdp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:layout_width="@dimen/_24sdp"
+                android:layout_height="@dimen/_24sdp"
+                />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/white_0_5" />
+
+        <TextView
+            android:id="@+id/custom"
+            style="@style/CustomTextStyleSemiBold14sp"
+            android:textColor="@color/white"
+            android:text="@string/custom"
+            android:paddingHorizontal="@dimen/_16sdp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+
+        <TextView
+            android:id="@+id/displaySpeed"
+            android:gravity="center"
+            android:text="1.0"
+            android:textColor="@color/white"
+            style="@style/CustomTextStyle14sp"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_22sdp"/>
+
+
+     <androidx.constraintlayout.widget.ConstraintLayout
+         android:layout_width="match_parent"
+         android:layout_height="wrap_content"
+         android:layout_marginBottom="@dimen/_16sdp">
+
+         <View
+             android:id="@+id/firstFloor"
+             app:layout_constraintTop_toTopOf="parent"
+             app:layout_constraintStart_toStartOf="parent"
+             android:layout_marginStart="@dimen/_8sdp"
+             android:layout_marginEnd="@dimen/_8sdp"
+             android:layout_marginTop="@dimen/_4sdp"
+             android:background="@drawable/background_gray_corner_round"
+             android:layout_width="match_parent"
+             android:layout_height="@dimen/_5sdp"/>
+
+         <SeekBar
+             android:id="@+id/speedSeekbar"
+             android:layout_width="match_parent"
+             android:layout_height="wrap_content"
+             android:max="100"
+             android:thumbTint="@color/white"
+             android:progress="0"
+             android:minHeight="@dimen/_5sdp"
+             android:maxHeight="@dimen/_5sdp"
+             app:layout_constraintTop_toTopOf="parent"
+             app:layout_constraintStart_toStartOf="parent"
+             android:progressDrawable="@drawable/background_seekbar_track"
+             android:paddingStart="@dimen/_8sdp"
+             android:paddingEnd="@dimen/_8sdp"/>
+     </androidx.constraintlayout.widget.ConstraintLayout>
+        
+
+
+    </LinearLayout>
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

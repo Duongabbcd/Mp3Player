@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+android:layout_width="match_parent"
+xmlns:tools="http://schemas.android.com/tools"
+android:padding="@dimen/_16sdp"
+xmlns:app="http://schemas.android.com/apk/res-auto"
+android:background="@drawable/background_corner_top_round"
+android:backgroundTint="@color/bottom_sheet_bg"
+android:layout_height="wrap_content">
+
+<TextView
+    android:id="@+id/speed"
+    android:contentDescription="@string/imageview"
+    android:text="@string/create_new_playlist"
+    style="@style/CustomTextStyleSemiBold20sp"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    app:layout_constraintStart_toStartOf="parent"
+    app:layout_constraintTop_toTopOf="parent"
+    />
+
+<RelativeLayout
+    android:id="@+id/newPlaylist"
+    app:layout_constraintTop_toBottomOf="@+id/speed"
+    app:layout_constraintStart_toStartOf="parent"
+    android:layout_width="match_parent"
+    android:gravity="center_vertical"
+    android:layout_height="@dimen/_48sdp">
+
+    <ImageView
+        android:src="@drawable/icon_add"
+        android:contentDescription="@string/imageview"
+        android:layout_width="@dimen/_16sdp"
+        android:layout_height="@dimen/_16sdp" />
+
+
+    <TextView
+        android:layout_width="0dp"
+        style="@style/CustomTextStyleSemiBold14sp"
+        android:textColor="#9F78FF"
+        android:layout_marginStart="@dimen/_20sdp"
+        android:layout_height="wrap_content"
+        android:text="@string/new_playlist"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentEnd="true"/>
+
+</RelativeLayout>
+
+<androidx.recyclerview.widget.RecyclerView
+    android:id="@+id/allPlaylists"
+    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+    tools:listitem="@layout/item_select_playlist"
+    app:layout_constraintTop_toBottomOf="@id/newPlaylist"
+    app:layout_constraintStart_toStartOf="parent"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/_200sdp"
+    android:layout_marginBottom="@dimen/_14sdp"/>
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

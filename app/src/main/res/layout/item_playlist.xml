@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/transparent"
+    android:paddingVertical="@dimen/_8sdp"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/customLayout"
+        android:visibility="visible"
+        android:layout_width="@dimen/_76sdp"
+        android:layout_height="@dimen/_56sdp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <com.google.android.material.imageview.ShapeableImageView
+            android:id="@+id/cardView"
+            android:scaleType="centerCrop"
+            android:layout_width="@dimen/_54sdp"
+            android:layout_height="@dimen/_54sdp"
+            android:background="@drawable/background_radius_3"
+            android:clipToOutline="true"
+            app:shapeAppearanceOverlay="@style/ShapeAppearanceOverlay_CustomShape6dp"
+            android:contentDescription="@string/imageview"
+            android:src="@drawable/image"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+
+        <ImageView
+            android:id="@+id/halfDisc"
+            android:layout_width="@dimen/_48sdp"
+            android:layout_height="@dimen/_48sdp"
+            android:layout_marginStart="@dimen/_29sdp"
+            android:layout_marginBottom="@dimen/_3sdp"
+            android:contentDescription="@string/imageview"
+            android:src="@drawable/icon_default_disc"
+            app:layout_constraintBottom_toBottomOf="@id/cardView"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@id/cardView" />
+
+        <ImageView
+            android:id="@+id/purpleRound"
+            android:layout_width="@dimen/_16sdp"
+            android:layout_height="@dimen/_16sdp"
+            android:layout_marginStart="@dimen/_48sdp"
+            android:contentDescription="@string/imageview"
+            android:src="@drawable/icon_purple_round"
+            app:layout_constraintBottom_toBottomOf="@id/cardView"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@id/cardView" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <ImageView
+        android:id="@+id/defaultLayout"
+        android:visibility="gone"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:contentDescription="@string/imageview"
+        android:src="@drawable/icon_avt_playlist"
+        android:layout_width="@dimen/_74sdp"
+        android:layout_height="@dimen/_56sdp" />
+
+    <LinearLayout
+        android:layout_marginStart="@dimen/_88sdp"
+        android:layout_marginEnd="@dimen/_8sdp"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:orientation="vertical"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:id="@+id/playlistName"
+            style="@style/CustomTextStyleSemiBold14sp"
+            android:text="Whispers in Dusk"
+            android:maxLines="1"
+            android:ellipsize="end"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <TextView
+            android:id="@+id/playlistSize"
+            style="@style/CustomTextStyle12sp"
+            android:textColor="@color/subTitle"
+            android:text="Lina Rowe"
+            android:maxLines="1"
+            android:ellipsize="end"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+    </LinearLayout>
+
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

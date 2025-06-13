@@ -1,0 +1,19 @@
+{
+    "logs": [
+        {
+            "outputFile": "com.cheonjaeung.powerwheelpicker.android.test.wheelpicker-mergeDebugAndroidTestResources-22:/values-port/values-port.xml",
+            "map": [
+                {
+                    "source": "/Users/samueljeven/.gradle/caches/8.10.2/transforms/0df9e0adbf994d02bcca3cf513416ee1/transformed/appcompat-1.7.1/res/values-port/values-port.xml",
+                    "from": {
+                        "startLines": "2",
+                        "startColumns": "4",
+                        "startOffsets": "55",
+                        "endColumns": "55",
+                        "endOffsets": "106"
+                    }
+                }
+            ]
+        }
+    ]
+}

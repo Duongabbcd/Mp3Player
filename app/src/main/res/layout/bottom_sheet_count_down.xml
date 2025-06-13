@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:overScrollMode="never"
+    android:id="@+id/nestedScrollView"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:paddingBottom="@dimen/_20sdp"
+    android:background="@drawable/background_corner_top_round">
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:padding="@dimen/_20sdp">
+
+            <TextView
+                android:text="@string/time_sleeper_title"
+                style="@style/CustomTextStyleSemiBold20sp"
+                android:textColor="@color/white"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+        </LinearLayout>
+        
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_gravity="center_horizontal"
+            android:layout_width="@dimen/_160sdp"
+            android:layout_height="@dimen/_50sdp">
+
+            <TextView
+                android:id="@+id/hourValue"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:text="00"
+                android:gravity="center"
+                android:textColor="@color/white"
+                style="@style/CustomTextStyleSemiBold"
+                android:textSize="@dimen/_36sdp"
+                android:layout_height="wrap_content" />
+
+
+            <TextView
+                android:id="@+id/twoDot"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:text=":"
+                android:textColor="@color/white"
+                style="@style/CustomTextStyleSemiBold"
+                android:textSize="@dimen/_36sdp"
+                android:gravity="center"
+                android:layout_height="wrap_content" />
+
+            <TextView
+                android:id="@+id/minuteValue"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:text="00"
+                android:gravity="center"
+                android:textColor="@color/white"
+                style="@style/CustomTextStyleSemiBold"
+                android:textSize="@dimen/_36sdp"
+                android:layout_height="wrap_content" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_24sdp"
+            android:layout_marginHorizontal="@dimen/_16sdp"
+            android:gravity="end"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/endButton"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:paddingHorizontal="24dp"
+                android:paddingVertical="12dp"
+                android:textColor="#AEAAAE"
+                android:text="@string/end"
+                android:gravity="center"
+                android:backgroundTint="#322F37"
+                android:layout_marginEnd="@dimen/_8sdp"
+                android:background="@drawable/background_selected_100dp"
+                style="@style/CustomTextStyleSemiBold14sp" />
+
+            <TextView
+                android:id="@+id/resetButton"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:paddingHorizontal="24dp"
+                android:paddingVertical="12dp"
+                android:textColor="@color/white"
+                android:text="@string/reset"
+                android:gravity="center"
+                android:backgroundTint="#DE3730"
+                android:layout_marginStart="@dimen/_8sdp"
+                android:background="@drawable/background_selected_100dp"
+                style="@style/CustomTextStyleSemiBold14sp" />
+        </LinearLayout>
+
+
+    </LinearLayout>
+
+</androidx.core.widget.NestedScrollView>

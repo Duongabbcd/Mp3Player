@@ -1,0 +1,181 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingTop="@dimen/_12sdp">
+
+    <RelativeLayout
+        android:id="@+id/allFunctions"
+        android:visibility="visible"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingHorizontal="@dimen/_14sdp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <LinearLayout
+            android:id="@+id/playAll"
+            android:layout_width="@dimen/_97sdp"
+            android:layout_height="@dimen/_32sdp"
+            android:background="@drawable/background_radius_100"
+            android:orientation="horizontal"
+            android:paddingHorizontal="@dimen/_16sdp"
+            android:paddingVertical="@dimen/_8sdp">
+
+            <ImageView
+                android:contentDescription="@string/imageview"
+                android:layout_width="@dimen/_16sdp"
+                android:layout_height="@dimen/_16sdp"
+                android:layout_weight="0"
+                android:src="@drawable/icon_mini_play" />
+
+            <TextView
+                style="@style/CustomTextStyleMedium12sp"
+                android:layout_width="0dp"
+                android:layout_height="@dimen/_16sdp"
+                android:layout_marginStart="@dimen/_8sdp"
+                android:layout_weight="2"
+                android:text="@string/play_all" />
+
+        </LinearLayout>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/shuffleAll"
+            android:layout_width="@dimen/_48sdp"
+            android:layout_height="@dimen/_32sdp"
+            android:layout_marginStart="@dimen/_12sdp"
+            android:layout_toEndOf="@id/playAll"
+            android:background="@drawable/background_no_solid_radius_100">
+
+            <ImageView
+                android:layout_width="@dimen/_16sdp"
+                android:layout_height="@dimen/_16sdp"
+                android:contentDescription="@string/imageview"
+                android:src="@drawable/icon_shuffle"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <ImageView
+            android:id="@+id/filter"
+            android:layout_width="@dimen/_36sdp"
+            android:layout_height="@dimen/_36sdp"
+            android:layout_toStartOf="@+id/select"
+            android:contentDescription="@string/imageview"
+            android:src="@drawable/icon_filter" />
+
+        <ImageView
+            android:id="@+id/select"
+            android:layout_width="@dimen/_36sdp"
+            android:layout_height="@dimen/_36sdp"
+            android:layout_alignParentEnd="true"
+            android:contentDescription="@string/imageview"
+            android:src="@drawable/icon_select" />
+
+    </RelativeLayout>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/searchBar"
+        android:visibility="gone"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        android:paddingHorizontal="@dimen/_8sdp"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/_40sdp">
+
+        <EditText
+            android:id="@+id/searchText"
+            android:drawableStart="@drawable/icon_gray_search"
+            android:layout_width="match_parent"
+            android:textCursorDrawable="@drawable/cursor_color"
+            android:textColor="@color/white"
+            android:textColorHint="@color/top_selected"
+            android:layout_height="match_parent"
+            android:backgroundTint="#1F1637"
+            android:drawablePadding="@dimen/_8sdp"
+            android:hint="@string/search_song_name"
+            style="@style/CustomTextStyle16sp"
+            android:paddingHorizontal="@dimen/_12sdp"
+            android:background="@drawable/background_radius_gradient_100"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"/>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <LinearLayout
+        android:id="@+id/emptyLayout"
+        android:orientation="vertical"
+        android:gravity="center"
+        android:visibility="gone"
+        android:layout_marginTop="@dimen/_100sdp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
+        <ImageView
+            android:contentDescription="@string/imageview"
+            android:layout_width="@dimen/_104sdp"
+            android:layout_height="@dimen/_104sdp"
+            android:src="@drawable/icon_no_data"/>
+
+        <TextView
+            android:text="@string/no_song"
+            style="@style/CustomTextStyle14sp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
+    </LinearLayout>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/allSongs"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toTopOf="@+id/deleteLayout"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginTop="@dimen/_52sdp"
+        tools:listitem="@layout/item_song" />
+
+
+    <ProgressBar
+        android:id="@+id/progressBar"
+        android:progressTint="@color/progressBar"
+        android:layout_width="@dimen/_32sdp"
+        android:layout_height="@dimen/_32sdp"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"/>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/deleteLayout"
+        android:visibility="gone"
+        android:padding="@dimen/_16sdp"
+        android:background="@color/black_8_0"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:id="@+id/deleteButton"
+            android:text="@string/delete"
+            style="@style/CustomTextStyleSemiBold14sp"
+            android:gravity="center"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:background="@drawable/background_radius_100"
+            android:textColor="@color/white"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_width="@dimen/_92sdp"
+            android:layout_height="@dimen/_44sdp" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

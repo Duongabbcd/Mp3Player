@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+android:layout_width="match_parent"
+xmlns:tools="http://schemas.android.com/tools"
+android:paddingVertical="@dimen/_16sdp"
+xmlns:app="http://schemas.android.com/apk/res-auto"
+android:background="@drawable/background_corner_top_round"
+    android:backgroundTint="#27242D"
+android:layout_height="wrap_content">
+
+    <TextView
+        android:id="@+id/delete"
+        android:text="@string/delete"
+        style="@style/CustomTextStyleSemiBold20sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginStart="@dimen/_16sdp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+    <TextView
+        android:id="@+id/deleteQuestion"
+        style="@style/CustomTextStyle14sp"
+        android:textColor="#E9DDFF"
+        android:layout_marginTop="@dimen/_16sdp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/delete"
+        android:layout_marginStart="@dimen/_16sdp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_marginTop="@dimen/_24sdp"
+        android:layout_marginHorizontal="@dimen/_16sdp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/deleteQuestion"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:id="@+id/cancelBtn"
+            android:layout_marginEnd="@dimen/_4sdp"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:padding="@dimen/_4sdp"
+            android:background="@drawable/background_selected_100dp"
+            android:backgroundTint="#322F37"
+            android:orientation="horizontal"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/_44sdp">
+
+
+            <TextView
+                style="@style/CustomTextStyleSemiBold14sp"
+                android:text="@string/cancel"
+                android:textColor="#AEAAAE"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/createBtn"
+            android:layout_weight="1"
+            android:layout_marginStart="@dimen/_4sdp"
+            android:gravity="center"
+            android:padding="@dimen/_4sdp"
+            android:background="@drawable/background_selected_100dp"
+            android:backgroundTint="#322F37"
+            android:orientation="horizontal"
+            android:layout_width="0dp"
+            style="@style/CustomTextStyleSemiBold14sp"
+            android:text="@string/delete"
+            android:textColor="#DE3730"
+            android:layout_height="@dimen/_44sdp"/>
+    </LinearLayout>
+
+
+
+
+
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

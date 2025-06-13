@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="purple_200">#FFBB86FC</color>
+    <color name="purple_500">#FF6200EE</color>
+    <color name="purple_700">#FF3700B3</color>
+    <color name="teal_200">#FF03DAC5</color>
+    <color name="teal_700">#FF018786</color>
+    <color name="black">#FF000000</color>
+    <color name="black_8_0">#CC000000</color>
+    <color name="white">#FFFFFFFF</color>
+
+<!--    custom-->
+     <color name="transparent">#00000000</color>
+     <color name="white_0_5">#0DFFFFFF</color>
+     <color name="white_1_0">#1AFFFFFF</color>
+     <color name="background">#0F1115</color>
+     <color name="selected_language">#8754FB</color>
+     <color name="button_language">#9F78FF</color>
+     <color name="top_selected">#63597E</color>
+     <color name="gray">#79767A</color>
+     <color name="subTitle">#79767A</color>
+     <color name="title">@color/white</color>
+     <color name="high_light">#80E9FF</color>
+     <color name="bottom_sheet_bg">#27242D</color>
+     <color name="bottom_sheet_content">#3D3A43</color>
+     <color name="progressBar">#502CA4</color>
+     <color name="delete_dialog">#ECE6F0</color>
+     <color name="unselect_sort">#B2A5CF</color>
+     <color name="select_sort">@color/white</color>
+     <color name="unselect_button">#322F37</color>
+     <color name="select_button">#CBB6FF</color>
+
+    <color name="main_color">#9F78FF</color>
+</resources>

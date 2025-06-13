@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:paddingVertical="@dimen/_8sdp"
+    android:paddingStart="@dimen/_16sdp"
+    android:paddingEnd="@dimen/_8sdp"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <com.google.android.material.imageview.ShapeableImageView
+        android:id="@+id/songAvatar"
+        android:contentDescription="@string/imageview"
+        android:src="@drawable/icon_avt_song"
+        android:layout_width="@dimen/_56sdp"
+        android:layout_height="@dimen/_56sdp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:shapeAppearanceOverlay="@style/ImageViewCornerRadius11" />
+
+    <LinearLayout
+        android:layout_marginStart="@dimen/_12sdp"
+        android:layout_marginEnd="@dimen/_16sdp"
+        app:layout_constraintTop_toTopOf="@id/songAvatar"
+        app:layout_constraintBottom_toBottomOf="@id/songAvatar"
+        app:layout_constraintStart_toEndOf="@id/songAvatar"
+        app:layout_constraintEnd_toStartOf="@id/iconDrag"
+        android:orientation="vertical"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:id="@+id/songName"
+            style="@style/CustomTextStyleSemiBold14sp"
+            android:text="Whispers in Dusk"
+            android:maxLines="1"
+            android:ellipsize="end"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <TextView
+            android:id="@+id/numberSong"
+            style="@style/CustomTextStyle12sp"
+            android:textColor="@color/subTitle"
+            android:text="Lina Rowe"
+            android:maxLines="1"
+            android:ellipsize="end"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+    </LinearLayout>
+
+    <ImageView
+        android:id="@+id/iconDrag"
+        android:src="@drawable/icon_drag"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_width="@dimen/_36sdp"
+        android:layout_height="@dimen/_36sdp"/>
+
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

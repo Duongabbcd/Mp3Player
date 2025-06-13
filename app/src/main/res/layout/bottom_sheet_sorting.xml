@@ -1,0 +1,235 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:paddingTop="@dimen/_16sdp"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@drawable/background_corner_top_round"
+    android:backgroundTint="#27242D"
+    android:layout_height="wrap_content">
+
+    <TextView
+        android:id="@+id/songAvatar"
+        android:text="@string/sort"
+        android:gravity="center"
+        style="@style/CustomTextStyleSemiBold20sp"
+        android:layout_marginStart="@dimen/_16sdp"
+        android:layout_width="wrap_content"
+        android:layout_height="@dimen/_32sdp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        />
+
+    <TextView
+        android:id="@+id/applyButton"
+        android:text="@string/apply"
+        android:gravity="center"
+        android:textColor="@color/unselect_sort"
+        android:layout_marginEnd="@dimen/_16sdp"
+        android:background="@drawable/background_radius_8"
+        android:backgroundTint="#322F37"
+        android:padding="@dimen/_8sdp"
+        android:layout_width="@dimen/_80sdp"
+        android:layout_height="@dimen/_32sdp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="@id/songAvatar"
+        app:layout_constraintTop_toTopOf="@id/songAvatar"
+        />
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/bottomLayout"
+        android:layout_marginTop="@dimen/_12sdp"
+        android:paddingBottom="@dimen/_16sdp"
+        android:paddingHorizontal="@dimen/_16sdp"
+        android:background="@color/bottom_sheet_bg"
+        app:layout_constraintTop_toBottomOf="@id/songAvatar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:background="@drawable/background_button_radius_12"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+
+            <RelativeLayout
+                android:id="@+id/fromAtoZ"
+                android:paddingVertical="@dimen/_13sdp"
+                android:paddingHorizontal="@dimen/_16sdp"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_46sdp">
+
+                <ImageView
+                    android:id="@+id/firstSortIcon"
+                    android:contentDescription="@string/imageview"
+                    android:src="@drawable/checkbox_un_select"
+                    android:layout_width="@dimen/_20sdp"
+                    android:layout_height="@dimen/_20sdp"/>
+
+                <TextView
+                    android:layout_marginStart="@dimen/_12sdp"
+                    style="@style/CustomTextStyle16sp"
+                    android:textColor="@color/white"
+                    android:text="@string/first_sort"
+                    android:layout_toEndOf="@id/firstSortIcon"
+                    android:layout_width="wrap_content"
+                    android:layout_height="@dimen/_20sdp"/>
+            </RelativeLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/white_0_5" />
+
+            <RelativeLayout
+                android:id="@+id/fromZtoA"
+                android:paddingVertical="@dimen/_13sdp"
+                android:paddingHorizontal="@dimen/_16sdp"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_46sdp">
+
+                <ImageView
+                    android:id="@+id/secondSortIcon"
+                    android:contentDescription="@string/imageview"
+                    android:src="@drawable/checkbox_un_select"
+                    android:layout_width="@dimen/_20sdp"
+                    android:layout_height="@dimen/_20sdp"/>
+
+                <TextView
+                    android:layout_marginStart="@dimen/_12sdp"
+                    style="@style/CustomTextStyle16sp"
+                    android:textColor="@color/white"
+                    android:text="@string/second_sort"
+                    android:layout_toEndOf="@id/secondSortIcon"
+                    android:layout_width="wrap_content"
+                    android:layout_height="@dimen/_20sdp"/>
+            </RelativeLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/white_0_5" />
+
+            <RelativeLayout
+                android:id="@+id/fromHighToLow"
+                android:paddingVertical="@dimen/_13sdp"
+                android:paddingHorizontal="@dimen/_16sdp"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_46sdp">
+
+                <ImageView
+                    android:id="@+id/thirdSortIcon"
+                    android:contentDescription="@string/imageview"
+                    android:src="@drawable/checkbox_un_select"
+                    android:layout_width="@dimen/_20sdp"
+                    android:layout_height="@dimen/_20sdp"/>
+
+                <TextView
+                    android:layout_marginStart="@dimen/_12sdp"
+                    style="@style/CustomTextStyle16sp"
+                    android:textColor="@color/white"
+                    android:text="@string/third_sort"
+                    android:layout_toEndOf="@id/thirdSortIcon"
+                    android:layout_width="wrap_content"
+                    android:layout_height="@dimen/_20sdp"/>
+            </RelativeLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/white_0_5" />
+
+            <RelativeLayout
+                android:id="@+id/fromLowToHigh"
+                android:paddingVertical="@dimen/_13sdp"
+                android:paddingHorizontal="@dimen/_16sdp"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_46sdp">
+
+                <ImageView
+                    android:id="@+id/forthSortIcon"
+                    android:contentDescription="@string/imageview"
+                    android:src="@drawable/checkbox_un_select"
+                    android:layout_width="@dimen/_20sdp"
+                    android:layout_height="@dimen/_20sdp"/>
+
+                <TextView
+                    android:layout_marginStart="@dimen/_12sdp"
+                    style="@style/CustomTextStyle16sp"
+                    android:textColor="@color/white"
+                    android:text="@string/forth_sort"
+                    android:layout_toEndOf="@id/forthSortIcon"
+                    android:layout_width="wrap_content"
+                    android:layout_height="@dimen/_20sdp"/>
+            </RelativeLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/white_0_5" />
+
+            <RelativeLayout
+                android:id="@+id/fromNewToOld"
+                android:paddingVertical="@dimen/_13sdp"
+                android:paddingHorizontal="@dimen/_16sdp"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_46sdp">
+
+                <ImageView
+                    android:id="@+id/fifthSortIcon"
+                    android:contentDescription="@string/imageview"
+                    android:src="@drawable/checkbox_un_select"
+                    android:layout_width="@dimen/_20sdp"
+                    android:layout_height="@dimen/_20sdp"/>
+
+                <TextView
+                    android:layout_marginStart="@dimen/_12sdp"
+                    style="@style/CustomTextStyle16sp"
+                    android:textColor="@color/white"
+                    android:text="@string/fifth_sort"
+                    android:layout_toEndOf="@id/fifthSortIcon"
+                    android:layout_width="wrap_content"
+                    android:layout_height="@dimen/_20sdp"/>
+            </RelativeLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/white_0_5" />
+
+            <RelativeLayout
+                android:id="@+id/fromOldToNew"
+                android:paddingVertical="@dimen/_13sdp"
+                android:paddingHorizontal="@dimen/_16sdp"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_46sdp">
+
+                <ImageView
+                    android:id="@+id/sixthSortIcon"
+                    android:contentDescription="@string/imageview"
+                    android:src="@drawable/checkbox_un_select"
+                    android:layout_width="@dimen/_20sdp"
+                    android:layout_height="@dimen/_20sdp"/>
+
+                <TextView
+                    android:layout_marginStart="@dimen/_12sdp"
+                    style="@style/CustomTextStyle16sp"
+                    android:textColor="@color/white"
+                    android:text="@string/sixth_sort"
+                    android:layout_toEndOf="@id/sixthSortIcon"
+                    android:layout_width="wrap_content"
+                    android:layout_height="@dimen/_20sdp"/>
+            </RelativeLayout>
+
+
+        </LinearLayout>
+
+
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

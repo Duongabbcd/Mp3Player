@@ -1,0 +1,133 @@
+<resources>
+    <string name="app_name" translatable="false">MusicPlayer</string>
+    <string name="imageview" translatable="false">imageView</string>
+
+    <string name="admob_id" translatable="false">ca-app-pub-3940256099942544~3347511713</string>
+    <string name="adjust_token_key" translatable="false"></string>
+    <string name="facebook_id" translatable="false"></string>
+    <string name="facebook_client_token" translatable="false"></string>
+
+    <string name="songs">Songs</string>
+    <string name="folder">Folder</string>
+    <string name="albums">Albums</string>
+    <string name="artists">Artists</string>
+
+    <string name="use_now">Use now</string>
+    <string name="using">Using</string>
+    <string name="unknown_artist">Unknown artist</string>
+    <string name="unknown_song">Unknown song</string>
+
+    <string name="no_song">No song here</string>
+    <string name="no_folder">No folder here</string>
+    <string name="no_album">No album here</string>
+    <string name="no_artist">No artist here</string>
+    <string name="no_playlist">No data here</string>
+    <string name="new_playlist">New Playlist</string>
+
+
+    <string name="apply">Apply</string>
+    <string name="select_language">Select Language</string>
+
+    <string name="delete">Delete</string>
+    <string name="delete_question">You want to delete %s?</string>
+    <string name="delete_question_2">You want to delete %s song?</string>
+    <string name="delete_question_3">You want to delete %s songs?</string>
+
+    <string name="intro_1">Access all songs stored on your device in seconds</string>
+    <string name="intro_2">Organize your favorites into custom playlists with ease.</string>
+    <string name="intro_3">Enjoy a smooth, offline music experience </string>
+
+    <string name="one_song">song</string>
+    <string name="many_songs">songs</string>
+    <string name="one_playlist">PLAYLIST</string>
+    <string name="many_playlists">PLAYLISTS</string>
+    <string name="one_folder">FOLDER</string>
+    <string name="many_folders">FOLDERS</string>
+    <string name="one_album">ALBUM</string>
+    <string name="many_albums">ALBUMS</string>
+    <string name="one_artist">ARTIST</string>
+    <string name="many_artists">ARTISTS</string>
+
+    <string name="search_song_name">Search song name…</string>
+    <string name="search_playlist_name">Search playlist name…</string>
+    <string name="search_folder_name">Search folder name…</string>
+    <string name="search_album_name">Search album name…</string>
+    <string name="search_artist_name">Search artist name…</string>
+
+
+
+    <string name="english">English</string>
+    <string name="hindi">Hindi</string>
+    <string name="spanish">Spanish</string>
+    <string name="french">French</string>
+    <string name="arabic">Arabic</string>
+    <string name="bengali">Bengali</string>
+    <string name="russian">Russian</string>
+    <string name="portuguese">Portuguese</string>
+    <string name="indonesian">Indonesian</string>
+    <string name="german">German</string>
+    <string name="italian">Italian</string>
+    <string name="korean">Korean</string>
+    <string name="language">Language</string>
+
+    <string name="cancel">Cancel</string>
+    <string name="end">End</string>
+    <string name="title_grant_Permission">Grant Permission</string>
+    <string name="message_grant_Permission">Please grant all permissions to access additional functionality.</string>
+    <string name="goto_setting">Go to setting</string>
+    <string name="play_all">Play all</string>
+    <string name="no_permission_description">Grant access to manage, organize and play video seamlessly.</string>
+    <string name="allow_permission">Allow permission</string>
+    <string name="settings">Settings</string>
+    <string name="ringtone">Set as ringtone</string>
+    <string name="share">Share</string>
+    <string name="delete_from_device">Delete from device</string>
+    <string name="sort">Sort</string>
+
+    <string name="first_sort">From A to Z</string>
+    <string name="second_sort">From Z to A</string>
+    <string name="third_sort">From High to Low</string>
+    <string name="forth_sort">From Low to High</string>
+    <string name="fifth_sort">From New to Old</string>
+    <string name="sixth_sort">From Old to New</string>
+
+    <string name="select_all">Select all</string>
+    <string name="selected">Selected</string>
+    <string name="go_to_artist">Go to artist</string>
+    <string name="add_to_playlist">Add to playlist</string>
+    <string name="speed">Speed</string>
+    <string name="shuffle">Shuffle</string>
+    <string name="custom">Custom</string>
+    <string name="create">Create</string>
+
+    <!--    dialog-->
+    <string name="title_must_be_not_empty">Title must not be empty</string>
+    <string name="title_is_exist">Title is exist</string>
+    <string name="empty_playlist_desc">Find your favorite song to add to playlist</string>
+
+    <!--    playlist-->
+    <string name="playlist">Playlist</string>
+    <string name="create_new_playlist">Create New Playlist</string>
+    <string name="delete_playlist">Delete playlist</string>
+    <string name="rename_playlist">Rename Playlist</string>
+    <string name="edit_playlist">Edit Playlist</string>
+    <string name="enter_playlist_name">Enter playlist name</string>
+    <string name="my_cute_playlist">My Cute Playlist</string>
+    <string name="song_added_before">This song has been added before!</string>
+    <string name="playlist_song_added_before">Theses songs have been added before!</string>
+    <string name="playlist_added_successfully">Added successfully!</string>
+    <string name="clear_my_favourite">Clear My Favourite</string>
+    <string name="add_song_success">Add song success</string>
+    <string name="remove_from_playlist">Remove from playlist</string>
+
+    <string name="time_sleeper_title">Stop music after</string>
+
+
+    <string name="start">Start</string>
+    <string name="reset">Reset</string>
+    <string name="edit">Edit</string>
+    <string name="name_playlist">Name playlist</string>
+    <string name="photo">Photo</string>
+    <string name="play">Play</string>
+
+</resources>
