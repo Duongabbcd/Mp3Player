@@ -27,13 +27,14 @@ class AddPlaylistBottomSheet (private val context: Context) :
             AddPlaylistAdapter {
                 CoroutineScope(Dispatchers.IO).launch {
                     val playlist = PlaylistUtils.getInstance(context)?.getPlaylistById(it)
-                    println("BottomSheetAddPlaylist: $it $playlist")
-                    var x = true
-                    if (dataList.isEmpty() || (audio == null || audio == Audio.EMPTY_SONG)) {
-                        return@launch
-                    }
 
+                    var x = true
+
+                    println("BottomSheetAddPlaylist 1: $dataList")
                     if (dataList.isEmpty()) {
+                        if (audio == null || audio == Audio.EMPTY_SONG) {
+                            return@launch
+                        }
                         x = PlaylistUtils.getInstance(context)?.addSongToPlaylist(audio, playlist) ?: false
                     } else {
                         PlaylistUtils.getInstance(context)
