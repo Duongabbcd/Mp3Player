@@ -49,7 +49,7 @@ class MainActivity : BaseActivity<ActivityMainBinding>(ActivityMainBinding::infl
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         initServicePlay()
-        displayScreen()
+
         binding.apply {
             setting.setOnClickListener {
                 startActivity(Intent(this@MainActivity, SettingActivity::class.java))
@@ -67,41 +67,35 @@ class MainActivity : BaseActivity<ActivityMainBinding>(ActivityMainBinding::infl
                 displayMode = DisplayMode.AUDIO
                 updateDisplayMode()
                 selectedTab = 0
-                openFragment(SongFragment.newInstance())
-                mainViewModel.getAllSongs()
-                mainViewModel.getAllSelectedAudios(listOf())
+                displayScreen()
             }
 
             playlist.setOnClickListener {
                 displayMode = DisplayMode.PLAYLIST
                 updateDisplayMode()
                selectedTab = 1
-                openFragment(PlaylistFragment.newInstance())
-                mainViewModel.getAllPlaylists()
+                displayScreen()
             }
 
             folder.setOnClickListener {
                 displayMode = DisplayMode.FOLDER
                 updateDisplayMode()
                 selectedTab = 2
-                openFragment(FolderFragment.newInstance())
-                mainViewModel.getAllFolder()
+                displayScreen()
             }
 
             albums.setOnClickListener {
                 displayMode = DisplayMode.ALBUM
                 updateDisplayMode()
                 selectedTab = 3
-                openFragment(AlbumFragment.newInstance())
-                mainViewModel.getAllAlbums()
+                displayScreen()
             }
 
             artists.setOnClickListener {
                 displayMode = DisplayMode.ARTIST
                 updateDisplayMode()
                 selectedTab = 4
-                openFragment(ArtistFragment.newInstance())
-                mainViewModel.getAllArtists()
+                displayScreen()
             }
 
 
@@ -143,6 +137,7 @@ class MainActivity : BaseActivity<ActivityMainBinding>(ActivityMainBinding::infl
 
     override fun onResume() {
         super.onResume()
+        displayScreen()
         binding.apply {
             if(!PermissionUtils.havePermission(this@MainActivity)) {
                 noPermission.visible()
@@ -155,9 +150,7 @@ class MainActivity : BaseActivity<ActivityMainBinding>(ActivityMainBinding::infl
                 noPermission.gone()
                 setting.isEnabled = true
                 search.isEnabled = true
-                displayMode = DisplayMode.AUDIO
                 updateDisplayMode()
-                openFragment(SongFragment.newInstance())
 
             }
 
@@ -179,6 +172,7 @@ class MainActivity : BaseActivity<ActivityMainBinding>(ActivityMainBinding::infl
 
             backBtn.setOnClickListener {
                 mainViewModel.searchText("", displayMode)
+                mainViewModel.getAllSelectedFolders(listOf())
                 searchBar.gone()
                 topBar.visible()
                 mainViewModel.searchInput.value = ""
@@ -237,7 +231,7 @@ class MainActivity : BaseActivity<ActivityMainBinding>(ActivityMainBinding::infl
 
             mainViewModel.allSelectedFolder.observe(this@MainActivity) { items ->
                 allFolderSelected.text = items.size.toString().plus(" ${resources.getString(R.string.selected)}")
-                if(items.size == mainViewModel.originSongs.size) {
+                if (items.size == mainViewModel.originFolders.size) {
                     selectAllFolderBtn.setOnClickListener {
                         mainViewModel.getAllSelectedFolders(listOf())
                     }

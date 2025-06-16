@@ -1,0 +1,215 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingTop="@dimen/_40sdp">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/functions"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/searchBar"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_40sdp"
+            android:paddingHorizontal="@dimen/_8sdp"
+            android:visibility="visible"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <ImageView
+                android:id="@+id/backBtn"
+                android:layout_width="@dimen/_40sdp"
+                android:layout_height="@dimen/_40sdp"
+                android:contentDescription="@string/imageview"
+                android:padding="@dimen/_8sdp"
+                android:src="@drawable/icon_back_black"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <EditText
+                android:id="@+id/searchText"
+                style="@style/CustomTextStyle16sp"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:background="@drawable/background_radius_gradient_100"
+                android:backgroundTint="#1F1637"
+                android:hint="@string/imageview"
+                android:paddingHorizontal="@dimen/_12sdp"
+                android:textColor="@color/white"
+                android:textColorHint="@color/top_selected"
+                android:textCursorDrawable="@drawable/cursor_color"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@id/backBtn" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/selectBar"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_40sdp"
+            android:paddingHorizontal="@dimen/_8sdp"
+            android:visibility="gone"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <ImageView
+                android:id="@+id/selectBackBtn"
+                android:layout_width="@dimen/_40sdp"
+                android:layout_height="@dimen/_40sdp"
+                android:contentDescription="@string/imageview"
+                android:padding="@dimen/_8sdp"
+                android:src="@drawable/icon_back_black"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/allSelected"
+                style="@style/CustomTextStyleSemiBold20sp"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:gravity="start"
+                android:paddingHorizontal="@dimen/_12sdp"
+                android:textColor="@color/white"
+                app:layout_constraintBottom_toBottomOf="@id/selectAllBtn"
+                app:layout_constraintEnd_toStartOf="@id/selectAllTitle"
+                app:layout_constraintStart_toEndOf="@id/selectBackBtn"
+                app:layout_constraintTop_toTopOf="@id/selectAllBtn" />
+
+            <TextView
+                android:id="@+id/allFolderSelected"
+                style="@style/CustomTextStyleSemiBold20sp"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:gravity="start"
+                android:paddingHorizontal="@dimen/_12sdp"
+                android:textColor="@color/white"
+                app:layout_constraintBottom_toBottomOf="@id/selectAllFolderBtn"
+                app:layout_constraintEnd_toStartOf="@id/selectFolderTitle"
+                app:layout_constraintStart_toEndOf="@id/selectBackBtn"
+                app:layout_constraintTop_toTopOf="@id/selectAllFolderBtn" />
+
+
+            <TextView
+                android:id="@+id/selectAllTitle"
+                style="@style/CustomTextStyleMedium12sp"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:text="@string/select_all"
+                android:textColor="@color/selected_language"
+                app:layout_constraintEnd_toStartOf="@id/selectAllBtn" />
+
+            <TextView
+                android:id="@+id/selectFolderTitle"
+                style="@style/CustomTextStyleMedium12sp"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:text="@string/select_all"
+                android:textColor="@color/selected_language"
+                app:layout_constraintEnd_toStartOf="@id/selectAllFolderBtn" />
+
+            <ImageView
+                android:id="@+id/selectAllBtn"
+                android:layout_width="@dimen/_40sdp"
+                android:layout_height="@dimen/_40sdp"
+                android:contentDescription="@string/imageview"
+                android:padding="@dimen/_10sdp"
+                android:src="@drawable/checkbox_un_select"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <ImageView
+                android:id="@+id/selectAllFolderBtn"
+                android:layout_width="@dimen/_40sdp"
+                android:layout_height="@dimen/_40sdp"
+                android:contentDescription="@string/imageview"
+                android:padding="@dimen/_10sdp"
+                android:src="@drawable/checkbox_un_select"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/functions" />
+
+
+    <LinearLayout
+        android:id="@+id/noPermission"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:paddingHorizontal="@dimen/_20sdp"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <ImageView
+            android:layout_width="@dimen/_200sdp"
+            android:layout_height="@dimen/_150sdp"
+            android:contentDescription="@string/imageview"
+            android:src="@drawable/no_permission" />
+
+        <TextView
+            style="@style/CustomTextStyle14sp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_18sdp"
+            android:gravity="center"
+            android:text="@string/no_permission_description" />
+
+        <TextView
+            android:id="@+id/permissionBtn"
+            style="@style/CustomTextStyleSemiBold14sp"
+            android:layout_width="@dimen/_180sdp"
+            android:layout_height="@dimen/_52sdp"
+            android:layout_marginTop="@dimen/_24sdp"
+            android:background="@drawable/background_radius_100"
+            android:gravity="center"
+            android:text="@string/allow_permission" />
+
+    </LinearLayout>
+
+    <include
+        android:id="@+id/layout_mini_player"
+        layout="@layout/layout_mini_player"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <View
+        android:id="@+id/view"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/white_0_5"
+        android:visibility="gone"
+        app:layout_constraintBottom_toTopOf="@id/frBanner" />
+
+    <FrameLayout
+        android:id="@+id/frBanner"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/black"
+        app:layout_constraintBottom_toBottomOf="parent" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

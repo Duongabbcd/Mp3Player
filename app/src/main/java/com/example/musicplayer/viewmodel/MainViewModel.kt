@@ -161,6 +161,7 @@ class MainViewModel @Inject constructor(
         viewModelScope.launch {
             loadingData(true)
             val current = SongLoader.getAllAudioFolders(context)
+            println("current: $current")
             originFolders.addAll(current)
             _allFolder.postValue(current.toMutableList())
             loadingData(false)

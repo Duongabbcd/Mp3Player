@@ -75,7 +75,7 @@ class SongAdapter( private val isPlaylist: Boolean = false, private val onSelect
     inner class SongViewHolder(private val binding: ItemSongBinding) : RecyclerView.ViewHolder(binding.root) {
         fun bind(position: Int) {
             val song =  items[position]
-
+            println("SongViewHolder: $song")
             binding.apply {
                 val string =
                     song.mediaObject?.path?.let { it.substring(it.lastIndexOf('/') + 1, it.length) }

@@ -1,9 +1,11 @@
 package com.example.service.service
 
+import android.content.ContentUris
 import android.content.Context
 import android.database.Cursor
-import android.provider.BaseColumns
+import android.net.Uri
 import android.provider.MediaStore
+import androidx.documentfile.provider.DocumentFile
 import com.example.service.model.Album
 import com.example.service.model.Artist
 import com.example.service.model.Audio
@@ -11,7 +13,6 @@ import com.example.service.model.Folder
 import com.example.service.model.MediaObject
 import com.example.service.utils.PreferenceUtil
 import com.example.service.utils.Utils
-import java.io.File
 
 object SongLoader {
 
@@ -19,12 +20,11 @@ object SongLoader {
         MediaStore.Audio.Media.IS_MUSIC + "!= 0 AND " + MediaStore.Audio.Media.MIME_TYPE + " LIKE 'audio/%'"
 
     private val AUDIO_PROJECTION = arrayOf(
-        BaseColumns._ID, // 0
+        MediaStore.Audio.Media._ID, // 0
         MediaStore.Audio.Media.TITLE, // 1,
         MediaStore.Audio.Media.TRACK, // 2,
         MediaStore.Audio.Media.YEAR, // 3,
-        MediaStore.Audio.Media.DURATION, // 4,
-        MediaStore.Audio.Media.DATA, // 5,
+        MediaStore.Audio.Media.DURATION, // 4, // 5,
         MediaStore.Audio.Media.DATE_MODIFIED, // 6,
         MediaStore.Audio.Media.ALBUM_ID, // 7,
         MediaStore.Audio.Media.ALBUM, // 8,
@@ -44,6 +44,8 @@ object SongLoader {
 
     fun getSongs(cursor: Cursor?): ArrayList<Audio> {
         val songs = arrayListOf<Audio>()
+        println("getSongs: ${cursor == null}")
+        println("getSongs: ${cursor?.moveToFirst()}")
         if (cursor != null && cursor.moveToFirst()) {
             do {
                 val song = getSongFromCursorImpl(cursor)
@@ -58,17 +60,28 @@ object SongLoader {
     }
 
     private fun getSongFromCursorImpl(cursor: Cursor): Audio {
-        val id = cursor.getString(0)
-        val title = cursor.getString(1)
-        val trackNumber = cursor.getInt(2)
-        val year = cursor.getInt(3)
-        val duration = cursor.getLong(4)
-        val data = cursor.getString(5)
-        val dateModified = cursor.getLong(6)
-        val albumId = cursor.getInt(7)
-        val albumName = cursor.getString(8)
-        val artistId = cursor.getInt(9)
-        val artistName = cursor.getString(10)
+        val idIndex = cursor.getColumnIndexOrThrow(MediaStore.Audio.Media._ID)
+        val titleIndex = cursor.getColumnIndexOrThrow(MediaStore.Audio.Media.TITLE)
+        val durationIndex = cursor.getColumnIndexOrThrow(MediaStore.Audio.Media.DURATION)
+        val dateModifiedIndex = cursor.getColumnIndexOrThrow(MediaStore.Audio.Media.DATE_MODIFIED)
+        val albumIdIndex = cursor.getColumnIndexOrThrow(MediaStore.Audio.Media.ALBUM_ID)
+        val albumNameIndex = cursor.getColumnIndexOrThrow(MediaStore.Audio.Media.ALBUM)
+        val artistIdIndex = cursor.getColumnIndexOrThrow(MediaStore.Audio.Media.ARTIST_ID)
+        val artistNameIndex = cursor.getColumnIndexOrThrow(MediaStore.Audio.Media.ARTIST)
+
+        val id = cursor.getLong(idIndex)
+        val title = cursor.getString(titleIndex)
+        val duration = cursor.getLong(durationIndex)
+        val dateModified = cursor.getLong(dateModifiedIndex)
+        val albumId = cursor.getInt(albumIdIndex)
+        val albumName = cursor.getString(albumNameIndex)
+        val artistId = cursor.getInt(artistIdIndex)
+        val artistName = cursor.getString(artistNameIndex)
+
+        // ✅ Get content URI
+        val contentUri = ContentUris.withAppendedId(
+            MediaStore.Audio.Media.EXTERNAL_CONTENT_URI, id.toLong()
+        )
 
         return Audio(
             albumId = albumId.toString(),
@@ -77,8 +90,16 @@ object SongLoader {
             artistId = artistId.toString(),
             artistName = artistName,
             timeCount = duration,
-            mediaObject = MediaObject(id.toString(), title, "", data, timeModified = dateModified)
-        )
+            mediaObject = MediaObject(
+                id.toString(),
+                title,
+                "",
+                contentUri.toString(),
+                timeModified = dateModified
+            )
+        ).also {
+            println("audio: $it")
+        }
     }
 
     fun makeSongCursor(
@@ -107,73 +128,89 @@ object SongLoader {
         return try {
             context.contentResolver.query(
                 MediaStore.Audio.Media.EXTERNAL_CONTENT_URI,
-                AUDIO_PROJECTION, customSelection, selectionValues, sortOrder
+                null, null, null, sortOrder
             )
         } catch (e: SecurityException) {
             null
         }
     }
 
-    private fun makeAlbumSongCursorById(albumId: String, context: Context): Cursor? {
-        val selection = StringBuilder()
-        selection.append("${MediaStore.Audio.AudioColumns.IS_MUSIC}=1")
-        selection.append(" AND ${MediaStore.Audio.AudioColumns.TITLE} != ''")
-        selection.append(" AND ${MediaStore.Audio.AudioColumns.ALBUM} = '${albumId.replace("'", "''")}'")
-
-        return context.contentResolver.query(
-            MediaStore.Audio.Media.EXTERNAL_CONTENT_URI,
-            null,
-            selection.toString(),
-            null,
-            "${MediaStore.Audio.Media.TRACK}, ${PreferenceUtil.getInstance(context)?.getSongSortOrder()}"
-        )
-    }
 
     fun getSongAlbumById(albumId: String, context: Context): ArrayList<Audio> {
         val songList = arrayListOf<Audio>()
         try {
             println("albumId: $albumId")
-            val audioCursor = makeAlbumSongCursorById(albumId, context)
-            if (audioCursor != null && audioCursor.moveToFirst()) {
+            val selection =
+                "${MediaStore.Audio.Media.ALBUM}=? AND ${MediaStore.Audio.Media.DURATION}>0"
+            val selectionArgs = arrayOf(albumId) // ✅ NOT artistId
 
-                val id = audioCursor.getColumnIndexOrThrow(BaseColumns._ID)
-                val nameIndex = audioCursor.getColumnIndexOrThrow(MediaStore.Audio.Media.DISPLAY_NAME)
-                val artistNameIndex = audioCursor.getColumnIndexOrThrow(MediaStore.Audio.Media.ARTIST)
-                val artistIndex = audioCursor.getColumnIndexOrThrow(MediaStore.Audio.Media.ARTIST_ID)
-                val uriIndex = audioCursor.getColumnIndexOrThrow(MediaStore.Audio.Media.DATA)
-                val durationIndex = audioCursor.getColumnIndexOrThrow(MediaStore.Audio.Media.DURATION)
-                val sizeIndex = audioCursor.getColumnIndexOrThrow(MediaStore.Audio.Media.SIZE)
-                val dateIndex = audioCursor.getColumnIndexOrThrow(MediaStore.Audio.Media.DATE_ADDED)
-                val albumIndex = audioCursor.getColumnIndexOrThrow(MediaStore.Audio.Media.ALBUM_ID)
-                val albumNameIndex = audioCursor.getColumnIndexOrThrow(MediaStore.Audio.Media.ALBUM)
+            val AUDIO_BY_ARTIST_PROJECTION = arrayOf(
+                MediaStore.Audio.Media._ID,
+                MediaStore.Audio.Media.DISPLAY_NAME,
+                MediaStore.Audio.Media.ARTIST,
+                MediaStore.Audio.Media.ARTIST_ID,
+                MediaStore.Audio.Media.DURATION,
+                MediaStore.Audio.Media.SIZE,
+                MediaStore.Audio.Media.DATE_ADDED,
+                MediaStore.Audio.Media.DATE_MODIFIED,
+                MediaStore.Audio.Media.ALBUM_ID,
+                MediaStore.Audio.Media.ALBUM
+            )
 
-                do {
-                    val audioId = audioCursor.getInt(id).toString()
-                    val path = audioCursor.getString(uriIndex)
-                    val title = audioCursor.getString(nameIndex)
-                    val artist = audioCursor.getString(artistNameIndex)
-                    val artistId = audioCursor.getString(artistIndex)
-                    val album = audioCursor.getString(albumIndex)
-                    val timeSong = Utils.getDuration(audioCursor.getLong(durationIndex))
-                    val timeCount = audioCursor.getLong(durationIndex)
-                    val fileSize = audioCursor.getLong(sizeIndex)
-                    val timeModified = audioCursor.getLong(dateIndex)
-                    val albumName = audioCursor.getString(albumNameIndex)
-                    val audio = Audio(
-                        artistId = artistId,
-                        artistName = artist,
-                        timeSong = timeSong,
-                        albumId = album,
-                        albumName = albumName,
-                        timeCount = timeCount,
-                        mediaObject = MediaObject(id.toString(), title, "", path, fileSize = fileSize)
+
+            context.contentResolver.query(
+                MediaStore.Audio.Media.EXTERNAL_CONTENT_URI,
+                AUDIO_BY_ARTIST_PROJECTION,
+                selection,
+                selectionArgs,
+                PreferenceUtil.getInstance(context)?.getSongSortOrder()
+            )?.use { cursor ->
+
+                val idCol = cursor.getColumnIndexOrThrow(MediaStore.Audio.Media._ID)
+                val nameCol = cursor.getColumnIndexOrThrow(MediaStore.Audio.Media.DISPLAY_NAME)
+                val artistNameCol = cursor.getColumnIndexOrThrow(MediaStore.Audio.Media.ARTIST)
+                val artistIdCol = cursor.getColumnIndexOrThrow(MediaStore.Audio.Media.ARTIST_ID)
+                val durationCol = cursor.getColumnIndexOrThrow(MediaStore.Audio.Media.DURATION)
+                val sizeCol = cursor.getColumnIndexOrThrow(MediaStore.Audio.Media.SIZE)
+                val dateModCol = cursor.getColumnIndexOrThrow(MediaStore.Audio.Media.DATE_MODIFIED)
+                val albumIdCol = cursor.getColumnIndexOrThrow(MediaStore.Audio.Media.ALBUM_ID)
+                val albumNameCol = cursor.getColumnIndexOrThrow(MediaStore.Audio.Media.ALBUM)
+
+                while (cursor.moveToNext()) {
+
+                    val songId = cursor.getLong(idCol)
+                    val contentUri = ContentUris.withAppendedId(
+                        MediaStore.Audio.Media.EXTERNAL_CONTENT_URI, songId
                     )
-                    if(timeSong != "00:00") {
-                        songList.add(audio)
-                    }
 
-                } while (audioCursor.moveToNext())
-                audioCursor.close()
+                    val title = cursor.getString(nameCol)
+                    val artistName = cursor.getString(artistNameCol)
+                    val artistId = cursor.getString(artistIdCol)
+                    val duration = cursor.getLong(durationCol)
+                    val size = cursor.getLong(sizeCol)
+                    val dateMod = cursor.getLong(dateModCol)
+                    val albumId = cursor.getLong(albumIdCol).toString()
+                    val albumName = cursor.getString(albumNameCol)
+                    val timeSongTxt = Utils.getDuration(duration)
+
+                    if (timeSongTxt != "00:00") {
+                        songList += Audio(
+                            artistId = artistId,
+                            artistName = artistName,
+                            albumId = albumId,
+                            albumName = albumName,
+                            timeSong = timeSongTxt,
+                            timeCount = duration,
+                            mediaObject = MediaObject(
+                                id = songId.toString(),
+                                title = title,
+                                path = contentUri.toString(),
+                                fileSize = size,
+                                timeModified = dateMod
+                            )
+                        )
+                    }
+                }
             }
         } catch (e: Exception) {
             e.printStackTrace()
@@ -221,136 +258,147 @@ object SongLoader {
     }
 
     fun getSongByArtistId(artistId: String, context: Context): List<Audio> {
-        val artistList = arrayListOf<Audio>()
-        try {
-            val artistCursor = makeArtistAlbumCursor(artistId, context)
-            println("getSongByArtistId is null 1 ${artistCursor == null}")
-            println("getSongByArtistId is null 2 ${artistCursor?.moveToFirst()}")
-            if (artistCursor != null && artistCursor.moveToFirst()) {
-                println("getSongByArtistId is here")
-                val id = artistCursor.getColumnIndexOrThrow(BaseColumns._ID)
-                val nameIndex = artistCursor.getColumnIndexOrThrow(MediaStore.Audio.Media.DISPLAY_NAME)
-                val artistIndex = artistCursor.getColumnIndexOrThrow(MediaStore.Audio.Media.ARTIST_ID)
-                val artistNameIndex = artistCursor.getColumnIndexOrThrow(MediaStore.Audio.Media.ARTIST)
-                val uriIndex = artistCursor.getColumnIndexOrThrow(MediaStore.Audio.Media.DATA)
-                val durationIndex = artistCursor.getColumnIndexOrThrow(MediaStore.Audio.Media.DURATION)
-                val sizeIndex = artistCursor.getColumnIndexOrThrow(MediaStore.Audio.Media.SIZE)
-                val dateIndex = artistCursor.getColumnIndexOrThrow(MediaStore.Audio.Media.DATE_ADDED)
-                val albumIndex = artistCursor.getColumnIndexOrThrow(MediaStore.Audio.Media.ALBUM_ID)
-                val albumNameIndex = artistCursor.getColumnIndexOrThrow(MediaStore.Audio.Media.ALBUM)
-
-                do {
-                    val audioId = artistCursor.getInt(id).toString()
-                    val path = artistCursor.getString(uriIndex)
-                    val title = artistCursor.getString(nameIndex)
-                    val artist = artistCursor.getString(artistNameIndex)
-                    val artistId = artistCursor.getString(artistIndex)
-                    val imageThumb = artistCursor.getString(albumIndex)
-                    val timeSong = Utils.getDuration(artistCursor.getLong(durationIndex))
-                    val timeCount = artistCursor.getLong(durationIndex)
-                    val fileSize = artistCursor.getLong(sizeIndex)
-                    val timeModified = artistCursor.getLong(dateIndex)
-                    val albumId = artistCursor.getString(albumIndex)
-                    val albumName = artistCursor.getString(albumNameIndex)
-                    val audio = Audio(
-                        artistId = artistId,
-                        artistName = artist,
-                        timeSong = timeSong,
-                        albumName = albumName,
-                        albumId = albumId,
-                        timeCount = timeCount,
-                        mediaObject = MediaObject(id.toString(), title, "", path, fileSize = fileSize)
-                    )
-
-                    println("getSongByArtistId: $audio")
-                    if(timeSong != "00:00") {
-                        artistList.add(audio)
-                    }
-                } while (artistCursor.moveToNext())
-                artistCursor.close()
-            }
-        } catch (e: Exception) {
-            e.printStackTrace()
-        }
-        return artistList
-    }
-
-    private fun makeArtistAlbumCursor(artistId: String, context: Context): Cursor? {
+        val songs = mutableListOf<Audio>()
         try {
             val selection = "${MediaStore.Audio.Media.ARTIST}=? AND ${MediaStore.Audio.Media.DURATION}>0"
-            val selectionArgs = arrayOf(artistId.toString())
+            val selectionArgs = arrayOf(artistId) // ✅ NOT artistId
 
-            return context.contentResolver.query(
+            val AUDIO_BY_ARTIST_PROJECTION = arrayOf(
+                MediaStore.Audio.Media._ID,
+                MediaStore.Audio.Media.DISPLAY_NAME,
+                MediaStore.Audio.Media.ARTIST,
+                MediaStore.Audio.Media.ARTIST_ID,
+                MediaStore.Audio.Media.DURATION,
+                MediaStore.Audio.Media.SIZE,
+                MediaStore.Audio.Media.DATE_ADDED,
+                MediaStore.Audio.Media.DATE_MODIFIED,
+                MediaStore.Audio.Media.ALBUM_ID,
+                MediaStore.Audio.Media.ALBUM
+            )
+
+            context.contentResolver.query(
                 MediaStore.Audio.Media.EXTERNAL_CONTENT_URI,
-                AUDIO_PROJECTION, // ✅ MUST include ARTIST_ID
+                AUDIO_BY_ARTIST_PROJECTION,
                 selection,
                 selectionArgs,
-                null
-            )
+                PreferenceUtil.getInstance(context)?.getSongSortOrder()
+            )?.use { cursor ->
+
+                val idCol = cursor.getColumnIndexOrThrow(MediaStore.Audio.Media._ID)
+                val nameCol = cursor.getColumnIndexOrThrow(MediaStore.Audio.Media.DISPLAY_NAME)
+                val artistNameCol = cursor.getColumnIndexOrThrow(MediaStore.Audio.Media.ARTIST)
+                val durationCol = cursor.getColumnIndexOrThrow(MediaStore.Audio.Media.DURATION)
+                val sizeCol = cursor.getColumnIndexOrThrow(MediaStore.Audio.Media.SIZE)
+                val dateModCol = cursor.getColumnIndexOrThrow(MediaStore.Audio.Media.DATE_MODIFIED)
+                val albumIdCol = cursor.getColumnIndexOrThrow(MediaStore.Audio.Media.ALBUM_ID)
+                val albumNameCol = cursor.getColumnIndexOrThrow(MediaStore.Audio.Media.ALBUM)
+
+                while (cursor.moveToNext()) {
+
+                    val songId = cursor.getLong(idCol)
+                    val contentUri = ContentUris.withAppendedId(
+                        MediaStore.Audio.Media.EXTERNAL_CONTENT_URI, songId
+                    )
+
+                    val title = cursor.getString(nameCol)
+                    val artistName = cursor.getString(artistNameCol)
+                    val duration = cursor.getLong(durationCol)
+                    val size = cursor.getLong(sizeCol)
+                    val dateMod = cursor.getLong(dateModCol)
+                    val albumId = cursor.getLong(albumIdCol).toString()
+                    val albumName = cursor.getString(albumNameCol)
+                    val timeSongTxt = Utils.getDuration(duration)
+
+                    if (timeSongTxt != "00:00") {
+                        songs += Audio(
+                            artistId = artistId,
+                            artistName = artistName,
+                            albumId = albumId,
+                            albumName = albumName,
+                            timeSong = timeSongTxt,
+                            timeCount = duration,
+                            mediaObject = MediaObject(
+                                id = songId.toString(),
+                                title = title,
+                                path = contentUri.toString(),
+                                fileSize = size,
+                                timeModified = dateMod
+                            )
+                        )
+                    }
+                }
+            }
+
+
         } catch (e: Exception) {
             e.printStackTrace()
         }
-        return null
+        return songs
     }
 
 
     fun getAllAudioFolders(context: Context): List<Folder> {
         val foldersMap = mutableMapOf<String, MutableList<Audio>>()
 
-        val projection = arrayOf(
-            MediaStore.Audio.Media.DATA,
-            MediaStore.Audio.Media.DISPLAY_NAME,
-            MediaStore.Audio.Media.ARTIST,
-            MediaStore.Audio.Media.ARTIST_ID,
-            MediaStore.Audio.Media.DURATION,
-            MediaStore.Audio.Media.ALBUM,
-            MediaStore.Audio.Media.ALBUM_ID
-        )
+        try {
+            val allSongs = getAllSongs(context)  // Your existing function to get List<Audio>
 
-        val uri = MediaStore.Audio.Media.EXTERNAL_CONTENT_URI
+            allSongs.forEach {
+                println("Audio filePath: ${it.mediaObject?.path}")
+            }
 
-        val selection = "${MediaStore.Audio.Media.IS_MUSIC} != 0"
-        val cursor = context.contentResolver.query(uri, projection, selection, null, null)
+            val filteredSongs = allSongs.filter { !it.mediaObject?.path.isNullOrEmpty() }
 
-        cursor?.use {
-            val dataIndex = cursor.getColumnIndexOrThrow(MediaStore.Audio.Media.DATA)
-            val artistNameIndex = cursor.getColumnIndexOrThrow(MediaStore.Audio.Media.ARTIST_ID)
-            val artistIndex = cursor.getColumnIndexOrThrow(MediaStore.Audio.Media.ARTIST)
-            val durationIndex = cursor.getColumnIndexOrThrow(MediaStore.Audio.Media.DURATION)
-            val albumIndex = cursor.getColumnIndexOrThrow(MediaStore.Audio.Media.ALBUM_ID)
-            val albumNameIndex = cursor.getColumnIndexOrThrow(MediaStore.Audio.Media.ALBUM)
+            val grouped = filteredSongs.groupBy { audio ->
+                try {
+                    val uri = Uri.parse(audio.mediaObject?.path)
+                    val folderName = getFolderNameFromUri(context, uri)
+                    println("Grouping by folderName: $folderName")
+                    folderName
+                } catch (e: Exception) {
+                    println("Exception in groupBy: ${e.message}")
+                    "Unknown"
+                }
+            }
 
-            while (cursor.moveToNext()) {
-                val filePath = cursor.getString(dataIndex) ?: continue
-                val file = File(filePath)
-                if (!file.exists()) continue
+            println("grouped keys: ${grouped.keys}")
+            println("grouped size: ${grouped.size}")
 
-                val durationMs = cursor.getLong(durationIndex)
-                if (durationMs <= 0) continue
+            grouped.forEach { (folderName, audioList) ->
+                foldersMap[folderName] = audioList.toMutableList()
+            }
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
 
-                val folderFile = file.parentFile ?: continue
-                val folderPath = folderFile.absolutePath
+        return foldersMap.map { (folderName, tracks) ->
+            Folder(name = folderName, path = "", tracks = tracks)
+        }
+    }
 
-                val audio = Audio(
-                    artistName = cursor.getString(artistNameIndex) ?: "",
-                    artistId = cursor.getString(artistIndex) ?: "",
-                    timeSong = Utils.getDuration(durationMs),
-                    albumName = cursor.getString(albumNameIndex) ?: "",
-                    albumId = cursor.getString(albumIndex) ?: "",
-                    timeCount = durationMs,
-                    filePath = filePath
-                )
 
-                foldersMap.getOrPut(folderPath) { mutableListOf() }.add(audio)
+    fun getFolderNameFromUri(context: Context, uri: Uri): String {
+        // Try 1: Use DocumentFile to get parent folder name
+        val docFile = DocumentFile.fromSingleUri(context, uri)
+        val parentDoc = docFile?.parentFile
+        if (parentDoc != null) {
+            return parentDoc.name ?: "Unknown"
+        }
+
+        // Try 2: Query MediaStore for album name as folder substitute
+        val projection = arrayOf(MediaStore.Audio.Media.ALBUM)
+        context.contentResolver.query(uri, projection, null, null, null)?.use { cursor ->
+            if (cursor.moveToFirst()) {
+                val albumIndex = cursor.getColumnIndexOrThrow(MediaStore.Audio.Media.ALBUM)
+                val albumName = cursor.getString(albumIndex)
+                if (!albumName.isNullOrEmpty()) {
+                    return albumName
+                }
             }
         }
 
-        // Convert to Folder objects, only if valid audio files exist
-        return foldersMap.mapNotNull { (path, audioList) ->
-            if (audioList.isEmpty()) return@mapNotNull null
-            val folderName = File(path).name
-            Folder(name = folderName, path = path, tracks = audioList)
-        }
+        // Fallback
+        return "Unknown"
     }
 
     fun getArtistsInDevice(context: Context): List<Artist> {

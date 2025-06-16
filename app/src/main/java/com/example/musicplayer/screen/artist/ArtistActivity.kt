@@ -45,6 +45,8 @@ class ArtistActivity : BaseActivity<ActivityArtistBinding>(ActivityArtistBinding
     private val allSongAdapter = SongAdapter  {   item ->  mainViewModel.getSelectedAudios(item) }
     private val listData = mutableListOf<Audio>()
 
+    private var isSelection = false
+
 
     private val broadcastChange = object : BroadcastReceiver() {
         override fun onReceive(context: Context?, intent: Intent?) {
@@ -193,7 +195,8 @@ class ArtistActivity : BaseActivity<ActivityArtistBinding>(ActivityArtistBinding
             })
 
             select.setOnClickListener {
-                mainViewModel.checkSelection(true)
+                isSelection = !isSelection
+                mainViewModel.checkSelection(isSelection)
             }
 
             mainViewModel.isShowSelection.observe(this@ArtistActivity) { input ->

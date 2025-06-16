@@ -29,7 +29,7 @@ class AddPlaylistBottomSheet (private val context: Context) :
                     val playlist = PlaylistUtils.getInstance(context)?.getPlaylistById(it)
                     println("BottomSheetAddPlaylist: $it $playlist")
                     var x = true
-                    if(audio ==  null || audio== Audio.EMPTY_SONG) {
+                    if (dataList.isEmpty() || (audio == null || audio == Audio.EMPTY_SONG)) {
                         return@launch
                     }
 

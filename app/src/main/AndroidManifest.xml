@@ -13,7 +13,9 @@
     <uses-permission android:name="android.permission.READ_MEDIA_IMAGES" />
     <uses-permission android:name="android.permission.READ_MEDIA_VIDEO" />
 
-    <uses-permission android:name="android.permission.WRITE_SETTINGS"/>
+    <uses-permission
+        android:name="android.permission.WRITE_SETTINGS"
+        tools:ignore="ProtectedPermissions" />
 
     <application
         android:name=".MyApplication"
@@ -49,6 +51,9 @@
         <activity android:name=".screen.playing_queue.PlayingQueueActivity" android:exported="false"/>
         <activity android:name=".screen.playlist.PhotoActivity" android:exported="false"/>
         <activity android:name=".screen.album.AlbumActivity" android:exported="false"/>
+        <activity
+            android:name=".screen.search.SearchActivity"
+            android:exported="false" />
 
 
         <activity

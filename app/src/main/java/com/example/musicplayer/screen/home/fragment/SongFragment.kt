@@ -108,7 +108,6 @@ class SongFragment : BaseFragment<FragmentSongBinding>(FragmentSongBinding::infl
                     MusicPlayerRemote.openAndShuffleQueue(ArrayList(items), true)
                     MusicPlayerRemote.toggleShuffleMode(SHUFFLE_MODE_SHUFFLE)
                     val result = MusicPlayerRemote.getPlayingQueue() as ArrayList<Audio>
-                    viewModel.getAllSongs(result)
                 }
 
                 playAll.setOnClickListener {

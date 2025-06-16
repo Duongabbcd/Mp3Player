@@ -13,7 +13,6 @@ import android.media.AudioManager
 import android.media.audiofx.AudioEffect
 import android.media.audiofx.Equalizer
 import android.media.audiofx.LoudnessEnhancer
-import android.net.Uri
 import android.os.Binder
 import android.os.Build
 import android.os.Bundle
@@ -24,7 +23,6 @@ import android.os.IBinder
 import android.os.Message
 import android.os.PowerManager
 import android.os.Process
-import android.preference.PreferenceManager
 import android.preference.PreferenceManager.getDefaultSharedPreferences
 import android.provider.MediaStore.Audio.Media
 import android.support.v4.media.MediaMetadataCompat
@@ -32,6 +30,7 @@ import android.support.v4.media.session.MediaSessionCompat
 import android.support.v4.media.session.PlaybackStateCompat
 import android.text.TextUtils
 import android.widget.Toast
+import androidx.core.content.edit
 import com.example.service.model.Audio
 import com.example.service.service.notification.PlayingNotification
 import com.example.service.service.notification.PlayingNotificationImpl24
@@ -40,18 +39,17 @@ import com.example.service.utils.Keys
 import com.example.service.utils.PreferenceUtil
 import com.example.service.utils.ShuffleHelper
 import com.example.service.utils.StopWatch
+import com.google.android.exoplayer2.C
 import com.google.android.exoplayer2.ExoPlayer
 import com.google.android.exoplayer2.MediaItem
 import com.google.android.exoplayer2.PlaybackException
+import com.google.android.exoplayer2.PlaybackParameters
 import com.google.android.exoplayer2.Player
+import com.google.android.exoplayer2.audio.AudioAttributes
 import com.google.android.exoplayer2.source.ProgressiveMediaSource
 import com.google.android.exoplayer2.upstream.DefaultHttpDataSource
 import java.io.File
 import java.lang.ref.WeakReference
-import androidx.core.content.edit
-import com.google.android.exoplayer2.C
-import com.google.android.exoplayer2.PlaybackParameters
-import com.google.android.exoplayer2.audio.AudioAttributes
 import kotlin.math.abs
 
 @Suppress("DEPRECATION")
@@ -322,7 +320,7 @@ class MusicService : Service(), SharedPreferences.OnSharedPreferenceChangeListen
         }
     }
 
-    private class QueueSaveHandler() : Handler() {
+    private class QueueSaveHandler : Handler() {
         private var mService: WeakReference<MusicService>? = null
 
         override fun handleMessage(msg: Message) {
@@ -337,13 +335,13 @@ class MusicService : Service(), SharedPreferences.OnSharedPreferenceChangeListen
     }
 
     private fun savePosition() {
-        getDefaultSharedPreferences(this).edit() {
+        getDefaultSharedPreferences(this).edit {
             putInt(SAVED_POSITION, getPosition())
         }
     }
 
     private fun savePositionInTrack() {
-        getDefaultSharedPreferences(this).edit() {
+        getDefaultSharedPreferences(this).edit {
             putLong(SAVED_POSITION_IN_TRACK, getSongProgressMillis())
         }
     }
@@ -436,8 +434,12 @@ class MusicService : Service(), SharedPreferences.OnSharedPreferenceChangeListen
                     .createMediaSource(mediaItem)
                 playback?.setMediaSource(mediaSource)
             } else {
-                val mediaItem = MediaItem.fromUri(Uri.parse(audio.mediaObject?.path!!))
-                playback?.setMediaItem(mediaItem)
+                if (currentSong.mediaObject == null) {
+                    return false
+                } else {
+                    val mediaItem = MediaItem.fromUri(currentSong.mediaObject!!.path)
+                    playback?.setMediaItem(mediaItem)
+                }
             }
             playback?.prepare()
             applyLoudnessEnhancerIfNeeded()
@@ -1302,7 +1304,7 @@ class MusicService : Service(), SharedPreferences.OnSharedPreferenceChangeListen
         countDownTimer = object : CountDownTimer(time, 1000) {
             override fun onTick(millisUntilFinished: Long) {
                 timeRemaining = millisUntilFinished
-                val intent = Intent(MusicService.ACTION_UPDATE_SLEEP_TIMER)
+                val intent = Intent(ACTION_UPDATE_SLEEP_TIMER)
                 sendBroadcast(intent)
             }
 
@@ -1342,7 +1344,7 @@ class MusicService : Service(), SharedPreferences.OnSharedPreferenceChangeListen
             REPEAT_MODE_ALL,
             REPEAT_MODE_THIS -> {
                 repeatMode = value
-                getDefaultSharedPreferences(this).edit() {
+                getDefaultSharedPreferences(this).edit {
                     putInt(SAVED_REPEAT_MODE, value)
                 }
                 prepareNext()
